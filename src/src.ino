@@ -1,10 +1,16 @@
+#include "led.h"
+
+constexpr unsigned int PERIOD{2};
+constexpr unsigned int HALF_PERIOD{PERIOD / 2};
+
 void setup(){
-    pinMode(LED_BUILTIN, OUTPUT);
+    Builtin_led::init();
 }
 
 void loop(){
-    digitalWrite(LED_BUILTIN, HIGH);
-    delay(1000);
-    digitalWrite(LED_BUILTIN, LOW);
-    delay(1000);
+    Builtin_led::on();
+    delay_s(HALF_PERIOD);
+    Builtin_led::off();
+    delay_s(HALF_PERIOD);
+
     }
