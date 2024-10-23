@@ -23,7 +23,7 @@ private:
     int pin;
 };
 
-class Digital_indicator{
+class Digital_indicator{  //Класс 7 сегментного цифрового индикатора
 public:
     Digital_indicator(int up, int average, int down, int l_up, int l_down, int r_up, int r_down){
         pin_up = up; 
@@ -53,13 +53,125 @@ public:
         digitalWrite(pin_r_up, HIGH);
     }
     void on(){
+        digitalWrite(pin_up, LOW);
+        digitalWrite(pin_average, LOW);
+        digitalWrite(pin_down, LOW);
+        digitalWrite(pin_l_down, LOW);
+        digitalWrite(pin_l_up, LOW);
+        digitalWrite(pin_r_down, LOW);
+        digitalWrite(pin_r_up, LOW);
+    }
+    void zero(){
+        digitalWrite(pin_up, LOW);
+        digitalWrite(pin_average, HIGH);
+        digitalWrite(pin_down, LOW);
+        digitalWrite(pin_l_down, LOW);
+        digitalWrite(pin_l_up, LOW);
+        digitalWrite(pin_r_down, LOW);
+        digitalWrite(pin_r_up, LOW);    
+    }
+    void one(){
         digitalWrite(pin_up, HIGH);
         digitalWrite(pin_average, HIGH);
         digitalWrite(pin_down, HIGH);
         digitalWrite(pin_l_down, HIGH);
         digitalWrite(pin_l_up, HIGH);
+        digitalWrite(pin_r_down, LOW);
+        digitalWrite(pin_r_up, LOW);
+    }
+    void two(){
+        digitalWrite(pin_up, LOW);
+        digitalWrite(pin_average, LOW);
+        digitalWrite(pin_down, LOW);
+        digitalWrite(pin_l_down, LOW);
+        digitalWrite(pin_l_up, HIGH);
         digitalWrite(pin_r_down, HIGH);
+        digitalWrite(pin_r_up, LOW);
+    }
+    void three(){
+        digitalWrite(pin_up, LOW);
+        digitalWrite(pin_average, LOW);
+        digitalWrite(pin_down, LOW);
+        digitalWrite(pin_l_down, HIGH);
+        digitalWrite(pin_l_up, HIGH);
+        digitalWrite(pin_r_down, LOW);
+        digitalWrite(pin_r_up, LOW);
+    }
+    void four(){
+        digitalWrite(pin_up, HIGH);
+        digitalWrite(pin_average, LOW);
+        digitalWrite(pin_down, HIGH);
+        digitalWrite(pin_l_down, HIGH);
+        digitalWrite(pin_l_up, LOW);
+        digitalWrite(pin_r_down, LOW);
+        digitalWrite(pin_r_up, LOW);
+    }
+    void five(){
+        digitalWrite(pin_up, LOW);
+        digitalWrite(pin_average, LOW);
+        digitalWrite(pin_down, LOW);
+        digitalWrite(pin_l_down, HIGH);
+        digitalWrite(pin_l_up, LOW);
+        digitalWrite(pin_r_down, LOW);
         digitalWrite(pin_r_up, HIGH);
+    }
+    void six(){
+        digitalWrite(pin_up, LOW);
+        digitalWrite(pin_average, LOW);
+        digitalWrite(pin_down, LOW);
+        digitalWrite(pin_l_down, LOW);
+        digitalWrite(pin_l_up, LOW);
+        digitalWrite(pin_r_down, LOW);
+        digitalWrite(pin_r_up, HIGH);
+    }
+    void seven(){
+        digitalWrite(pin_up, LOW);
+        digitalWrite(pin_average, HIGH);
+        digitalWrite(pin_down, HIGH);
+        digitalWrite(pin_l_down, HIGH);
+        digitalWrite(pin_l_up, HIGH);
+        digitalWrite(pin_r_down, LOW);
+        digitalWrite(pin_r_up, LOW);
+    }
+    void eight(){
+        digitalWrite(pin_up, LOW);
+        digitalWrite(pin_average, LOW);
+        digitalWrite(pin_down, LOW);
+        digitalWrite(pin_l_down, LOW);
+        digitalWrite(pin_l_up, LOW);
+        digitalWrite(pin_r_down, LOW);
+        digitalWrite(pin_r_up, LOW);        
+    }
+    void nine(){
+        digitalWrite(pin_up, LOW);
+        digitalWrite(pin_average, LOW);
+        digitalWrite(pin_down, LOW);
+        digitalWrite(pin_l_down, HIGH);
+        digitalWrite(pin_l_up, LOW);
+        digitalWrite(pin_r_down, LOW);
+        digitalWrite(pin_r_up, LOW);        
+    }
+    void counting_down(int time){
+        zero();
+        delay(time);
+        one();
+        delay(time);
+        two();
+        delay(time);
+        three();
+        delay(time);
+        four();
+        delay(time);
+        five();
+        delay(time);
+        six();
+        delay(time);
+        seven();
+        delay(time);
+        eight();
+        delay(time);  
+        nine();
+        delay(time);  
     }
 
 private:

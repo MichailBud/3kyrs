@@ -7,16 +7,16 @@ unsigned int a = 1;
 LED red = 13;
 LED yellow = 12;
 LED green = 11;
+Digital_indicator indicator(8, 9, 2, 3, 4, 5, 6);
 
 
 void setup(){
-    red.init();
-    yellow.init();
-    green.init();
-    Serial.begin(115200);
+    
 }
 
 void loop(){
+    indicator.counting_down(500);
+    /*
     red.on();
     delay(5000);
     yellow.on();
@@ -34,5 +34,5 @@ void loop(){
     delay(1500);
     yellow.off();
     Serial.println("STOP!");
-
+*/
     }
