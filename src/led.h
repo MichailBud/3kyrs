@@ -1,13 +1,14 @@
+template<int pin>
 class LED{
 public:
 
-    LED(int a_pin): pin{a_pin} {};
+    LED(){};
 
-    void on(){digitalWrite(pin, HIGH);}
+    static void on(){digitalWrite(pin, HIGH);}
     
-    void off(){digitalWrite(pin, LOW);}
+    static void off(){digitalWrite(pin, LOW);}
 
-    void init(){pinMode(pin, OUTPUT);}
+    static void init(){pinMode(pin, OUTPUT);}
 
     void on_time_repeat(int time, int repeat){   // Включает светодиод на определённое время time определённое число раз repeat
     int i = repeat;
@@ -18,9 +19,7 @@ public:
         delay(time);
         off();
         }
-}
-private:
-    int pin;
+    }
 };
 
 class Digital_indicator{  //Класс 7 сегментного цифрового индикатора
