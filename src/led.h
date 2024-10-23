@@ -22,6 +22,82 @@ public:
     }
 };
 
+template<int vcc, int red, int blue, int green>
+class RGB_LED{
+public:
+    RGB_LED(){};
+    
+    static void init(){
+        pinMode(red, OUTPUT);
+        pinMode(green, OUTPUT);
+        pinMode(blue, OUTPUT);
+        pinMode(vcc, OUTPUT);
+        digitalWrite(vcc, HIGH);
+        digitalWrite(red, HIGH);
+        digitalWrite(green, HIGH);
+        digitalWrite(blue, HIGH);
+    }
+
+    static void red_on(){
+        digitalWrite(red, LOW);
+        green_off();
+        blue_off();
+    }
+    static void green_on(){
+        digitalWrite(green, LOW);
+        red_off();
+        blue_off();
+    }
+    static void blue_on(){
+        digitalWrite(blue, LOW);
+        red_off();
+        green_off();
+    }
+
+    static void red_off(){
+        digitalWrite(red, HIGH);
+    }
+    static void green_off(){
+        digitalWrite(green, HIGH);
+    }
+    static void blue_off(){
+        digitalWrite(blue, HIGH);
+    }
+
+    static void off(){
+        digitalWrite(blue, HIGH);
+        digitalWrite(green, HIGH);
+        digitalWrite(red, HIGH);       
+    }
+    static void on(){
+        digitalWrite(blue, LOW);
+        digitalWrite(green, LOW);
+        digitalWrite(red, LOW);       
+    }
+
+    static void smooth_on(int time){
+        int i=255;
+        while (i){
+            i -= 1;
+            delay(time/255);
+            analogWrite(red, i);
+            analogWrite(blue, i);
+            analogWrite(green, i);
+        }
+    }
+
+    static void smooth_off(int time){
+        int i=255;
+        while (i){
+            i -= 1;
+            delay(time/255);
+            analogWrite(red, 255 - i);
+            analogWrite(blue, 255 - i);
+            analogWrite(green, 255 - i);
+        }
+    }
+};
+
 class Digital_indicator{  //Класс 7 сегментного цифрового индикатора
 public:
     Digital_indicator(int up, int average, int down, int l_up, int l_down, int r_up, int r_down){
