@@ -1,106 +1,65 @@
 
-
-class Anode_driven{};
-class Cathode_driven{};
-
-template<int pin, typename Conn_type>
-class LED{
-public:
-
-    LED()=delete;
-
-    static void init(){pinMode(pin, OUTPUT);}
-    
-    static void on(){		
-        if constexpr(std::is_same<Anode_driven, Conn_type>){digitalWrite(pin, HIGH);}
-		if constexpr(std::is_same<Cathode_driven, Conn_type>){digitalWrite(pin, LOW);}
-        }
-    
-	static void off(){
-		if constexpr(std::is_same<Anode_driven, Conn_type>){digitalWrite(pin, LOW);}
-		if constexpr(std::is_same<Cathode_driven, Conn_type>){digitalWrite(pin, HIGH);}
-	} 
-
-    void on_time_repeat(int time, int repeat){   // Включает светодиод на определённое время time определённое число раз repeat
-    int i = repeat;
-    while (i){
-        i-=1;
-        delay(time);
-        on();
-        delay(time);
-        off();
-        }
-    }
-};
-
-template<int vcc, int red, int blue, int green, typename Conn_type>
+template<int vcc, int red, int blue, int green>
 class RGB_LED{
 public:
     RGB_LED(){};
-    
+
     static void init(){
         pinMode(red, OUTPUT);
         pinMode(green, OUTPUT);
         pinMode(blue, OUTPUT);
         pinMode(vcc, OUTPUT);
-        if constexpr(std::is_same<Anode_driven, Conn_type>){digitalWrite(vcc, LOW);}
-		if constexpr(std::is_same<Cathode_driven, Conn_type>){digitalWrite(vcc, HIGH);}
+        digitalWrite(vcc, HIGH);
+        blue_off();
+        red_off();
+        green_off();
     }
 
     static void red_on(){
-        if constexpr(std::is_same<Anode_driven, Conn_type>){
-            digitalWrite(red, HIGH);
-            }
-		if constexpr(std::is_same<Cathode_driven, Conn_type>){
-            digitalWrite(red, LOW);
-            }
+        digitalWrite(red, LOW);
     }
-
     static void green_on(){
-        if constexpr(std::is_same<Anode_driven, Conn_type>){
-            digitalWrite(green, HIGH);
-            }
-		if constexpr(std::is_same<Cathode_driven, Conn_type>){
-            digitalWrite(green, LOW);
-            }
+        digitalWrite(green, LOW);
     }
-
     static void blue_on(){
-        if constexpr(std::is_same<Anode_driven, Conn_type>){
-            digitalWrite(blue, HIGH);
-            }
-		if constexpr(std::is_same<Cathode_driven, Conn_type>){
-            digitalWrite(blue, LOW);
-            }
+        digitalWrite(blue, LOW);
     }
 
     static void red_off(){
-        if constexpr(std::is_same<Anode_driven, Conn_type>){
-            digitalWrite(red, LOW);
-            }
-		if constexpr(std::is_same<Cathode_driven, Conn_type>){
-            digitalWrite(red, HIGH);
-            }
+        digitalWrite(red, HIGH);
     }
-
     static void green_off(){
-        if constexpr(std::is_same<Anode_driven, Conn_type>){
-            digitalWrite(green, LOW);
-            }
-        if constexpr(std::is_same<Cathode_driven, Conn_type>){
-            digitalWrite(green, HIGH);
-            }
+        digitalWrite(green, HIGH);
+    }
+    static void blue_off(){
+        digitalWrite(blue, HIGH);
+    }
+    static void red_SHIM(int value){
+        analogWrite(red, value);
+    }
+    static void green_SHIM(int value){
+        analogWrite(green, value);
+    }
+    static void blue_SHIM(int value){
+        analogWrite(blue, value);
     }
 
-    static void blue_off(){
-        if constexpr(std::is_same<Anode_driven, Conn_type>){
-            digitalWrite(blue, LOW);
-            }
-        if constexpr(std::is_same<Cathode_driven, Conn_type>){
-            digitalWrite(blue, HIGH);
-            }
+};
+
+template<int source>
+class Photo_R{
+public:
+    Photo_R(){};
+
+    static void init(){
+        pinMode(source, INPUT);
+    }
+    static void read(){
+        analogRead(source);
     }
 };
+
+template<int pin, typename Conn_type>
 
 class Digital_indicator{  //Класс 7 сегментного цифрового индикатора
 public:
