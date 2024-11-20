@@ -1,11 +1,13 @@
 #include "led.h"
+#include <type_traits>
+#include <iostream>
 
 constexpr unsigned int PERIOD{2};
 constexpr unsigned int HALF_PERIOD{PERIOD / 2};
 
 
-using Builtin_LED = LED<13>;
-using RGB = RGB_LED<8, 9, 10, 11>;
+using Builtin_LED = LED<13, Anode_driven>;
+using RGB = RGB_LED<8, 9, 10, 11, Cathode_driven>;
 
 
 void setup(){
@@ -15,6 +17,5 @@ void setup(){
 }
 
 void loop(){
-    RGB::smooth_on(1500);
-    RGB::smooth_off(1500);
+    RGB::blue_on();
     }

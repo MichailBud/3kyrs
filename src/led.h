@@ -1,14 +1,25 @@
-template<int pin>
+
+
+class Anode_driven{};
+class Cathode_driven{};
+
+template<int pin, typename Conn_type>
 class LED{
 public:
 
-    LED(){};
-
-    static void on(){digitalWrite(pin, HIGH);}
-    
-    static void off(){digitalWrite(pin, LOW);}
+    LED()=delete;
 
     static void init(){pinMode(pin, OUTPUT);}
+    
+    static void on(){		
+        if constexpr(std::is_same<Anode_driven, Conn_type>){digitalWrite(pin, HIGH);}
+		if constexpr(std::is_same<Cathode_driven, Conn_type>){digitalWrite(pin, LOW);}
+        }
+    
+	static void off(){
+		if constexpr(std::is_same<Anode_driven, Conn_type>){digitalWrite(pin, LOW);}
+		if constexpr(std::is_same<Cathode_driven, Conn_type>){digitalWrite(pin, HIGH);}
+	} 
 
     void on_time_repeat(int time, int repeat){   // Включает светодиод на определённое время time определённое число раз repeat
     int i = repeat;
@@ -22,7 +33,7 @@ public:
     }
 };
 
-template<int vcc, int red, int blue, int green>
+template<int vcc, int red, int blue, int green, typename Conn_type>
 class RGB_LED{
 public:
     RGB_LED(){};
@@ -32,69 +43,62 @@ public:
         pinMode(green, OUTPUT);
         pinMode(blue, OUTPUT);
         pinMode(vcc, OUTPUT);
-        digitalWrite(vcc, HIGH);
-        digitalWrite(red, HIGH);
-        digitalWrite(green, HIGH);
-        digitalWrite(blue, HIGH);
+        if constexpr(std::is_same<Anode_driven, Conn_type>){digitalWrite(vcc, LOW);}
+		if constexpr(std::is_same<Cathode_driven, Conn_type>){digitalWrite(vcc, HIGH);}
     }
 
     static void red_on(){
-        digitalWrite(red, LOW);
-        green_off();
-        blue_off();
+        if constexpr(std::is_same<Anode_driven, Conn_type>){
+            digitalWrite(red, HIGH);
+            }
+		if constexpr(std::is_same<Cathode_driven, Conn_type>){
+            digitalWrite(red, LOW);
+            }
     }
+
     static void green_on(){
-        digitalWrite(green, LOW);
-        red_off();
-        blue_off();
+        if constexpr(std::is_same<Anode_driven, Conn_type>){
+            digitalWrite(green, HIGH);
+            }
+		if constexpr(std::is_same<Cathode_driven, Conn_type>){
+            digitalWrite(green, LOW);
+            }
     }
+
     static void blue_on(){
-        digitalWrite(blue, LOW);
-        red_off();
-        green_off();
+        if constexpr(std::is_same<Anode_driven, Conn_type>){
+            digitalWrite(blue, HIGH);
+            }
+		if constexpr(std::is_same<Cathode_driven, Conn_type>){
+            digitalWrite(blue, LOW);
+            }
     }
 
     static void red_off(){
-        digitalWrite(red, HIGH);
+        if constexpr(std::is_same<Anode_driven, Conn_type>){
+            digitalWrite(red, LOW);
+            }
+		if constexpr(std::is_same<Cathode_driven, Conn_type>){
+            digitalWrite(red, HIGH);
+            }
     }
+
     static void green_off(){
-        digitalWrite(green, HIGH);
+        if constexpr(std::is_same<Anode_driven, Conn_type>){
+            digitalWrite(green, LOW);
+            }
+        if constexpr(std::is_same<Cathode_driven, Conn_type>){
+            digitalWrite(green, HIGH);
+            }
     }
+
     static void blue_off(){
-        digitalWrite(blue, HIGH);
-    }
-
-    static void off(){
-        digitalWrite(blue, HIGH);
-        digitalWrite(green, HIGH);
-        digitalWrite(red, HIGH);       
-    }
-    static void on(){
-        digitalWrite(blue, LOW);
-        digitalWrite(green, LOW);
-        digitalWrite(red, LOW);       
-    }
-
-    static void smooth_on(int time){
-        int i=255;
-        while (i){
-            i -= 1;
-            delay(time/255);
-            analogWrite(red, i);
-            analogWrite(blue, i);
-            analogWrite(green, i);
-        }
-    }
-
-    static void smooth_off(int time){
-        int i=255;
-        while (i){
-            i -= 1;
-            delay(time/255);
-            analogWrite(red, 255 - i);
-            analogWrite(blue, 255 - i);
-            analogWrite(green, 255 - i);
-        }
+        if constexpr(std::is_same<Anode_driven, Conn_type>){
+            digitalWrite(blue, LOW);
+            }
+        if constexpr(std::is_same<Cathode_driven, Conn_type>){
+            digitalWrite(blue, HIGH);
+            }
     }
 };
 
