@@ -54,8 +54,8 @@ public:
     static void init(){
         pinMode(source, INPUT);
     }
-    static void read(){
-        analogRead(source);
+    static int read(){
+        return analogRead(source);
     }
 };
 
