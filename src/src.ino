@@ -1,21 +1,27 @@
-#include "led.h"
+#include "Tone.h"
 
 constexpr unsigned int PERIOD{2};
 constexpr unsigned int HALF_PERIOD{PERIOD / 2};
 
-
-using RGB = RGB_LED<12, 11, 10, 9>;
+Tone tone1;
+//using RGB = RGB_LED<12, 11, 10, 9>;
 
 void setup(){
-    RGB::init();
+    tone1.begin(11);
 }
 
-void loop(){
-   RGB::red_on();
-   RGB::green_on();
-   RGB::red_off();
-   RGB::green_off();
 
+int i = 400;
+
+void loop(){
+    for (i; i < 800; i++){
+        tone1.play(i);
+        delay(1);
+    }
+    for (i; i > 400; i--){
+        tone1.play(i);
+        delay(1);
+    }
     }
 
 
