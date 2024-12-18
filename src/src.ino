@@ -8,20 +8,16 @@ Tone tone1;
 
 void setup(){
     tone1.begin(11);
+    pinMode(A1, INPUT);
+    Serial.begin(9600);
 }
 
 
-int i = 400;
+
 
 void loop(){
-    for (i; i < 800; i++){
-        tone1.play(i);
-        delay(1);
-    }
-    for (i; i > 400; i--){
-        tone1.play(i);
-        delay(1);
-    }
+    tone1.play(analogRead(A1));
+    Serial.println(analogRead(A1));
     }
 
 
